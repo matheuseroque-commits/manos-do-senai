@@ -1,1 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Visual de Redes para Automação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px 40px;
+            box-shadow: 0 20px 60px rgba(0, 30, 50, 0.15);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0a2838;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-bottom: 18px;
+            border-bottom: 3px solid #e8edf3;
+        }
+
+        h1 i {
+            color: #1e6a8a;
+            font-size: 30px;
+        }
+
+        /* Abas */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #4a677c;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn i {
+            font-size: 16px;
+        }
+
+        .tab-btn:hover {
+            background: #eef4f9;
+            color: #1a4b63;
+        }
+
+        .tab-btn.active {
+            background: #1a4b63;
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 75, 99, 0.25);
+        }
+
+        .tab-btn.active i {
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards - Aba 1 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 5px;
+        }
+
+        .card {
+            background: #f8fbfe;
+            border-radius: 20px;
+            padding: 25px 20px 20px;
+            border: 2px solid #e3ecf3;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #8bb9d4;
+            box-shadow: 0 12px 28px rgba(0, 40, 60, 0.08);
+        }
+
+        .card i {
+            font-size: 40px;
+            color: #1d6a8a;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0f364b;
+            margin-bottom: 4px;
+        }
+
+        .card .tag {
+            display: inline-block;
+            background: #dce8f2;
+            color: #1a4b63;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-top: 2px;
+        }
+
+        .card-detail {
+            margin-top: 16px;
+            padding: 14px 16px;
+            background: #e5f0f8;
+            border-radius: 14px;
+            border-left: 5px solid #1d6a8a;
+            font-size: 15px;
+            color: #0b3347;
+            font-weight: 500;
+            display: none;
+            text-align: left;
+        }
+
+        .card-detail.show {
+            display: block;
+        }
+
+        .card-detail i {
+            font-size: 14px;
+            color: #1d6a8a;
+            margin-right: 6px;
+        }
+
+        .hint {
+            margin-top: 18px;
+            color: #4d7288;
+            font-size: 14px;
+            background: #eef5fa;
+            padding: 8px 18px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .hint i {
+            margin-right: 6px;
+        }
+
+        /* Topologias - Aba 2 */
+        .topo-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .topo-btn {
+            background: white;
+            border: 2px solid #d3e2ed;
+            padding: 12px 30px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #1f4d69;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topo-btn i {
+            color: #2a7497;
+            font-size: 18px;
+        }
+
+        .topo-btn:hover {
+            background: #ecf5fc;
+            border-color: #8bb9d4;
+        }
+
+        .topo-btn.active {
+            background: #1a4b63;
+            border-color: #1a4b63;
+            color: white;
+        }
+
+        .topo-btn.active i {
+            color: white;
+        }
+
+        .topo-painel {
+            background: #f7faff;
+            border-radius: 24px;
+            padding: 25px 30px;
+            border: 2px solid #e2edf6;
+        }
+
+        .topo-painel h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0f364b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .topo-painel .descricao {
+            background: #e8f1f9;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 16px;
+            color: #12405a;
+            margin-bottom: 20px;
+            border-left: 5px solid #2a7497;
+        }
+
+        .topo-listas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .topo-listas .lista {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 22px;
+            border: 1px solid #e2edf6;
+        }
+
+        .topo-listas .lista h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topo-listas .lista ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .topo-listas .lista li {
+            padding: 6px 0;
+            font-size: 15px;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            border-bottom: 1px solid #f0f5fa;
+        }
+
+        .topo-listas .lista li:last-child {
+            border-bottom: none;
+        }
+
+        .topo-listas .lista li i {
+            width: 18px;
+            font-size: 14px;
+        }
+
+        .vantagens h3 i {
+            color: #1f8b4c;
+        }
+
+        .desvantagens h3 i {
+            color: #c0392b;
+        }
+
+        .vantagens li i {
+            color: #1f8b4c;
+        }
+
+        .desvantagens li i {
+            color: #c0392b;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #6f8d9e;
+            border-top: 2px solid #e8edf3;
+            padding-top: 20px;
+        }
+
+        .footer i {
+            margin-right: 6px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .topo-listas {
+                grid-template-columns: 1fr;
+            }
+            .topo-buttons {
+                flex-direction: column;
+            }
+            .topo-btn {
+                justify-content: center;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-microchip"></i> Guia Visual de Redes para Automação</h1>
+
+        <!-- Abas -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1"><i class="fas fa-ethernet"></i> Cabos Industriais</button>
+            <button class="tab-btn" data-tab="tab2"><i class="fas fa-project-diagram"></i> Topologias</button>
+        </div>
+
+        <!-- ABA 1: Cabos Industriais -->
+        <div id="tab1" class="tab-content active">
+            <div class="card-grid">
+                <!-- Card 1: Par Trançado -->
+                <div class="card" data-card="par">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Par Trançado</h3>
+                    <span class="tag">Industrial</span>
+                    <div class="card-detail" id="detail-par">
+                        <i class="fas fa-arrow-right"></i> Usado em redes Ethernet no chão de fábrica, conexão de CLPs, IHMs e sensores em distâncias curtas e médias. Versões blindadas (STP/FTP) protegem contra interferência eletromagnética.
+                    </div>
+                </div>
+
+                <!-- Card 2: Fibra Óptica -->
+                <div class="card" data-card="fibra">
+                    <i class="fas fa-fiber"></i>
+                    <h3>Fibra Óptica</h3>
+                    <span class="tag">Industrial</span>
+                    <div class="card-detail" id="detail-fibra">
+                        <i class="fas fa-arrow-right"></i> Ideal para longas distâncias, interconexão entre armários elétricos, redes backbone e ambientes com alta interferência. Oferece alta velocidade e imunidade total a ruídos.
+                    </div>
+                </div>
+
+                <!-- Card 3: Wireless -->
+                <div class="card" data-card="wireless">
+                    <i class="fas fa-wifi"></i>
+                    <h3>Wireless</h3>
+                    <span class="tag">Industrial</span>
+                    <div class="card-detail" id="detail-wireless">
+                        <i class="fas fa-arrow-right"></i> Utilizado em AGVs (veículos guiados), robôs móveis, monitoramento remoto e locais de difícil cabeamento. Protocolos como Wi-Fi 6 e 5G industrial garantem baixa latência.
+                    </div>
+                </div>
+            </div>
+            <div class="hint"><i class="fas fa-hand-pointer"></i> Clique em cada card para ver a explicação</div>
+        </div>
+
+        <!-- ABA 2: Topologias -->
+        <div id="tab2" class="tab-content">
+            <div class="topo-buttons">
+                <button class="topo-btn active" data-topo="estrela"><i class="fas fa-star"></i> Layout em Estrela</button>
+                <button class="topo-btn" data-topo="barramento"><i class="fas fa-bars"></i> Layout em Barramento</button>
+            </div>
+
+            <div class="topo-painel" id="topo-painel">
+                <div id="topo-conteudo">
+                    <!-- Preenchido pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-robot"></i> Automação industrial · Referência rápida para o chão de fábrica
+        </div>
+    </div>
+
+    <script>
+        // ===== ABAS =====
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = {
+            tab1: document.getElementById('tab1'),
+            tab2: document.getElementById('tab2')
+        };
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active de todos os botões
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Mostra apenas a aba correspondente
+                const tabId = this.dataset.tab;
+                Object.keys(tabContents).forEach(id => {
+                    tabContents[id].classList.remove('active');
+                });
+                tabContents[tabId].classList.add('active');
+            });
+        });
+
+        // ===== CARDS =====
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                const detail = this.querySelector('.card-detail');
+                if (detail) {
+                    // Fecha todos os outros detalhes
+                    document.querySelectorAll('.card-detail').forEach(d => {
+                        if (d !== detail) d.classList.remove('show');
+                    });
+                    // Alterna o clique atual
+                    detail.classList.toggle('show');
+                }
+            });
+        });
+
+        // ===== TOPOLOGIAS =====
+        const dadosTopologias = {
+            estrela: {
+                icone: 'fa-star',
+                cor: '#f5b042',
+                titulo: 'Layout em Estrela',
+                descricao: 'Todos os dispositivos se conectam a um switch central. É a topologia mais comum em células de manufatura e ilhas de automação industrial.',
+                vantagens: [
+                    'Isolamento de falhas: um cabo com defeito não afeta os demais dispositivos',
+                    'Facilidade de manutenção e expansão da rede',
+                    'Desempenho previsível com switches gerenciáveis'
+                ],
+                desvantagens: [
+                    'Ponto único de falha: se o switch central falha, toda a rede para',
+                    'Maior quantidade de cabos, aumentando custo de infraestrutura',
+                    'Requer switch com portas suficientes para todos os dispositivos'
+                ]
+            },
+            barramento: {
+                icone: 'fa-bars',
+                cor: '#4f8db0',
+                titulo: 'Layout em Barramento',
+                descricao: 'Todos os dispositivos compartilham o mesmo cabo principal (backbone). Muito usado em redes RS-485, Modbus RTU e sistemas legacy no chão de fábrica.',
+                vantagens: [
+                    'Menor quantidade de cabos, economizando infraestrutura',
+                    'Simples de implementar em redes pequenas',
+                    'Custo reduzido em distâncias curtas'
+                ],
+                desvantagens: [
+                    'Se o cabo principal rompe, toda a rede fica inoperante',
+                    'Dificuldade de diagnosticar falhas (toda a rede é afetada)',
+                    'Degradação de desempenho com muitos dispositivos conectados',
+                    'Reflexão de sinal exige terminadores nas extremidades'
+                ]
+            }
+        };
+
+        const topoBtns = document.querySelectorAll('.topo-btn');
+        const topoConteudo = document.getElementById('topo-conteudo');
+
+        function renderizarTopologia(tipo) {
+            const dados = dadosTopologias[tipo];
+            if (!dados) return;
+
+            const vantagensHTML = dados.vantagens.map(v =>
+                `<li><i class="fas fa-check-circle"></i> ${v}</li>`
+            ).join('');
+
+            const desvantagensHTML = dados.desvantagens.map(d =>
+                `<li><i class="fas fa-times-circle"></i> ${d}</li>`
+            ).join('');
+
+            topoConteudo.innerHTML = `
+                <h2><i class="fas ${dados.icone}" style="color: ${dados.cor};"></i> ${dados.titulo}</h2>
+                <div class="descricao">${dados.descricao}</div>
+                <div class="topo-listas">
+                    <div class="lista vantagens">
+                        <h3><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Vantagens</h3>
+                        <ul>${vantagensHTML}</ul>
+                    </div>
+                    <div class="lista desvantagens">
+                        <h3><i class="fas fa-times-circle" style="color: #c0392b;"></i> Desvantagens</h3>
+                        <ul>${desvantagensHTML}</ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Inicializa com Estrela
+        renderizarTopologia('estrela');
+
+        topoBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active de todos os botões
+                topoBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const tipo = this.dataset.topo;
+                renderizarTopologia(tipo);
+            });
+        });
+    </script>
+</body>
+</html>
